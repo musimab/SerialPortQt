@@ -45,13 +45,12 @@ void Receiver::init_serial_port_configurations()
     if (arduino_is_available) {
         qDebug() << "Found the arduino port ...\n";
         m_arduino->setPortName(arduiono_uno_port_name);
-        m_arduino->open(QSerialPort::ReadOnly);
+        m_arduino->open(QSerialPort::ReadWrite);
         m_arduino->setBaudRate(QSerialPort::Baud9600);
         m_arduino->setDataBits(QSerialPort::Data8);
         m_arduino->setFlowControl(QSerialPort::NoFlowControl);
         m_arduino->setParity(QSerialPort::NoParity);
         m_arduino->setStopBits(QSerialPort::OneStop);
-
      }
     else {
         qDebug() << "Couldnt find the correct port for arduino";
@@ -69,11 +68,22 @@ void Receiver::readSerial()
 
         m_buffer = m_arduino->readLine();
         temperature_value = m_buffer.trimmed().toDouble();
-        qDebug() << "temperature data:" << temperature_value;
+        //qDebug() << "temperature data:" << temperature_value;
     }
 
     emit sendReceivedData(temperature_value);
 
 
+
+}
+
+void Receiver::writeSerial(QString command)
+{
+    if(m_arduino->isWritable()) {
+        m_arduino->write(command.toStdString().c_str());
+    }
+    else {
+        qDebug() << "Couldnt write to serial";
+    }
 
 }

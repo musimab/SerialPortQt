@@ -21,5 +21,7 @@ private:
     Receiver* serial_port_receiver = nullptr;
 private slots:
     void show_temperature(double temp);
+    void on_horizontalSlider_valueChanged(int value);
+
 };
 #endif // MAINWINDOW_H

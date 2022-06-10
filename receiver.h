@@ -23,8 +23,9 @@ class Receiver :public QObject
      void init_serial_port_configurations();
 
 
-private slots:
+public slots:
      void readSerial();
+     void writeSerial(QString command);
 signals:
      void sendReceivedData(double temperature);
      public:

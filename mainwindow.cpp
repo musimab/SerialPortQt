@@ -27,5 +27,11 @@ void MainWindow::show_temperature(double temp)
 }
 
 
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+     //connect(this, &QSlider::valueChanged, serial_port_receiver, &Receiver::writeSerial);
+    serial_port_receiver->writeSerial(QString("r%1").arg(value));
+    ui->label_led->setText(QString::number(value));
 
+}
 
